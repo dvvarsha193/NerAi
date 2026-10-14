@@ -40,7 +40,7 @@ export const LandingPageView: React.FC = () => {
     if (isAuthenticated && user) {
       switch (user.role) {
         case 'ADMIN':
-          navigate('/admin/vehicle-gis');
+          navigate('/admin/command-center');
           break;
         case 'DRIVER':
           navigate('/driver/dashboard');

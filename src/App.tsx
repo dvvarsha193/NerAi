@@ -73,7 +73,7 @@ export const App: React.FC = () => {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="/admin/vehicle-gis" replace />} />
+          <Route index element={<Navigate to="/admin/command-center" replace />} />
           <Route path="vehicle-gis" element={<AdminVehicleGisRoute />} />
           <Route path="field-reporting" element={<FieldTerminalView />} />
           <Route path="field-terminal" element={<FieldTerminalView />} />

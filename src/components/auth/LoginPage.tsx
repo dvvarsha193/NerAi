@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
   const redirectToDashboard = (role: string) => {
     switch (role) {
       case 'ADMIN':
-        navigate('/admin/vehicle-gis', { replace: true });
+        navigate('/admin/command-center', { replace: true });
         break;
       case 'DRIVER':
         navigate('/driver/dashboard', { replace: true });

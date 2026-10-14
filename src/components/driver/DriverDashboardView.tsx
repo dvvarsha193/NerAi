@@ -488,7 +488,7 @@ export const DriverDashboardView: React.FC = () => {
 
             <button
               onClick={() => {
-                alert('Initiating direct radio dispatch link...');
+                window.location.href = 'tel:1033';
                 setShowContactModal(false);
               }}
               className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2 text-xs"

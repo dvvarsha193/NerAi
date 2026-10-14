@@ -6,7 +6,6 @@ import {
   Sliders,
   Navigation,
   Cpu,
-  Search,
   Bell,
   Wifi,
   LogOut,
@@ -29,7 +28,6 @@ export const AdminLayout: React.FC = () => {
   const { alerts } = useTelemetryStore();
   const { pendingReports } = useOfflineStore();
 
-  const [searchQuery, setSearchQuery] = useState('');
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showAiScoreModal, setShowAiScoreModal] = useState(false);
   const [showDbModal, setShowDbModal] = useState(false);
@@ -98,22 +96,8 @@ export const AdminLayout: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right Controls: Search, Satellite, User Profile Menu */}
+          {/* Right Controls: Notification, Database Hub, AI Score, Satellite, User Profile Menu */}
           <div className="flex items-center gap-2.5">
-            
-            {/* Search Pill */}
-            <div className="relative hidden xl:flex items-center">
-              <div className="absolute left-1.5 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                <Search className="w-3.5 h-3.5" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search network..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 pr-3.5 py-1.5 text-xs text-slate-700 bg-white border border-slate-200 rounded-full w-44 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 placeholder:text-slate-400"
-              />
-            </div>
 
             {/* Notification Bell Pill */}
             <button
