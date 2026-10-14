@@ -45,9 +45,11 @@ export const useAuthStore = create<AuthState>((set, get) => {
   // Load initial user from localStorage if present
   let initialUser: AuthenticatedUser | null = null;
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      initialUser = JSON.parse(saved);
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        initialUser = JSON.parse(saved);
+      }
     }
   } catch (e) {
     console.error('Failed to parse saved auth session:', e);

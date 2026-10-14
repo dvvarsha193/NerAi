@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { db } from './db/database';
 import { dbService } from './db/databaseService';
 import { askGeminiLogisticsCopilot } from './services/geminiService';
@@ -9,8 +11,44 @@ import { NH13_PRIMARY_CORRIDOR, NH13_DYNAMIC_BYPASS, SELA_HAZARD_SECTOR } from '
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
-app.use(express.json());
+// 1. Enterprise Security Headers via Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Allow Leaflet GIS maps and imagery
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+// 2. CORS Configuration
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  })
+);
+
+// 3. Payload size limiting to prevent buffer overrun attacks
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// 4. Rate Limiting Protection (DDoS and Brute-force prevention)
+const globalApiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Network rate limit reached. Please retry in 60s.' },
+});
+app.use('/api/', globalApiLimiter);
+
+const authLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 60,
+  message: { error: 'Authentication rate limit reached. Please retry shortly.' },
+});
+app.use('/api/auth/', authLimiter);
 
 // Normalize URLs so /api prefix is always present even if stripped by Vercel serverless rewrites
 app.use((req, _res, next) => {

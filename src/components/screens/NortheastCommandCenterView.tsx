@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { useTelemetryStore } from '../../store/useTelemetryStore';
 import { DatabaseConnectorModal } from '../modals/DatabaseConnectorModal';
+import { DEFAULT_COMMAND_CENTER_DATA, DEFAULT_NER_DEPOTS, DEFAULT_NER_HEALTH_CENTERS } from '../../data/nerLogisticsData';
 
 const getApiBaseUrl = (endpoint: string) => {
   return typeof window !== 'undefined' && window.location.port === '5173'
@@ -94,9 +95,9 @@ export const NortheastCommandCenterView: React.FC = () => {
   const [showDbModal, setShowDbModal] = useState(false);
 
   // Pillar 1 Data: Command Center
-  const [commandData, setCommandData] = useState<any>(null);
-  const [selectedDepot, setSelectedDepot] = useState<any>(null);
-  const [selectedHealthCenter, setSelectedHealthCenter] = useState<any>(null);
+  const [commandData, setCommandData] = useState<any>(DEFAULT_COMMAND_CENTER_DATA);
+  const [selectedDepot, setSelectedDepot] = useState<any>(DEFAULT_NER_DEPOTS[0]);
+  const [selectedHealthCenter, setSelectedHealthCenter] = useState<any>(DEFAULT_NER_HEALTH_CENTERS[0]);
   const [isLoadingCommand, setIsLoadingCommand] = useState(false);
 
   // Pillar 2 Data: Stockout Radar

@@ -52,14 +52,22 @@ export const AdminLayout: React.FC = () => {
   return (
     <div className="h-screen w-screen overflow-hidden bg-[#F3F7FA] text-slate-800 flex flex-col selection:bg-blue-100 selection:text-blue-900">
       
+      {/* Accessibility Skip Link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-xl focus:shadow-lg focus:font-bold focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 py-2 select-none transition-all flex-shrink-0">
+      <header role="banner" className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 py-2 select-none transition-all flex-shrink-0">
         <div className="max-w-[1920px] mx-auto flex items-center justify-between gap-3">
           
           {/* Left: Brand Identity */}
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-[#2563EB] to-[#1D4ED8] flex items-center justify-center text-white shadow-md shadow-blue-500/25">
-              <Compass className="w-5 h-5" />
+              <Compass className="w-5 h-5" aria-hidden="true" />
             </div>
             <div className="flex items-baseline">
               <span className="text-xl font-extrabold tracking-tight text-slate-900 font-display">
@@ -72,7 +80,7 @@ export const AdminLayout: React.FC = () => {
           </div>
 
           {/* Center: Admin Pill Navigation Container */}
-          <nav className="hidden lg:flex items-center bg-[#F4F7FB] p-1 rounded-full border border-slate-200/70 overflow-x-auto max-w-[960px]">
+          <nav aria-label="Main Navigation" className="hidden lg:flex items-center bg-[#F4F7FB] p-1 rounded-full border border-slate-200/70 overflow-x-auto max-w-[960px]">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
@@ -85,10 +93,10 @@ export const AdminLayout: React.FC = () => {
                   }`
                 }
               >
-                {item.icon}
+                <span aria-hidden="true">{item.icon}</span>
                 <span>{item.label}</span>
                 {item.badge !== undefined && item.badge > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-500 text-white">
+                  <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-rose-500 text-white" aria-label={`${item.badge} pending items`}>
                     {item.badge}
                   </span>
                 )}
@@ -103,9 +111,10 @@ export const AdminLayout: React.FC = () => {
             <button
               onClick={() => navigate('/admin/alerts')}
               title="Operational Alerts"
-              className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 relative transition-colors shadow-xs cursor-pointer"
+              aria-label={`Operational Alerts: ${unreadAlerts} unread`}
+              className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 relative transition-colors shadow-xs cursor-pointer focus:ring-2 focus:ring-blue-500/40"
             >
-              <Bell className="w-4 h-4" />
+              <Bell className="w-4 h-4" aria-hidden="true" />
               {unreadAlerts > 0 && (
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white animate-pulse" />
               )}
@@ -115,9 +124,10 @@ export const AdminLayout: React.FC = () => {
             <button
               onClick={() => setShowDbModal(true)}
               title="Click to view Database Connectivity (MongoDB Atlas / Supabase)"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 hover:from-emerald-100 hover:to-teal-100 text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer active:scale-95"
+              aria-label="Open Database Connectivity Hub"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 hover:from-emerald-100 hover:to-teal-100 text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer active:scale-95 focus:ring-2 focus:ring-emerald-500/40"
             >
-              <Database className="w-3.5 h-3.5 text-emerald-600" />
+              <Database className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
               <span className="text-[11px] font-black">Database Hub</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
             </button>
@@ -126,16 +136,17 @@ export const AdminLayout: React.FC = () => {
             <button
               onClick={() => setShowAiScoreModal(true)}
               title="Click to view AI Intelligence Audit & SIH Evaluation Score"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 hover:from-blue-100 hover:to-indigo-100 text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer active:scale-95"
+              aria-label="View AI Evaluation Score Audit: 96.8%"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 hover:from-blue-100 hover:to-indigo-100 text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer active:scale-95 focus:ring-2 focus:ring-blue-500/40"
             >
-              <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 animate-pulse" aria-hidden="true" />
               <span className="text-[11px] font-black">AI Score: 96.8%</span>
               <span className="hidden xl:inline text-[9px] px-1.5 py-0.2 bg-blue-600 text-white rounded-full font-bold">SIH Apex</span>
             </button>
 
             {/* Live Uplink Status Pill */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-medium" role="status" aria-label="Satellite Uplink Status: Live">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" aria-hidden="true" />
               <span className="text-[11px] font-bold">Live Uplink</span>
             </div>
 
@@ -143,7 +154,10 @@ export const AdminLayout: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
-                className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white border border-slate-200 hover:border-slate-300 transition-all shadow-xs cursor-pointer"
+                aria-haspopup="true"
+                aria-expanded={showProfileMenu}
+                aria-label="User profile and settings"
+                className="flex items-center gap-2 pl-2 pr-3 py-1 rounded-full bg-white border border-slate-200 hover:border-slate-300 transition-all shadow-xs cursor-pointer focus:ring-2 focus:ring-blue-500/40"
               >
                 <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold shadow-xs">
                   {user?.name ? user.name.charAt(0) : 'A'}
@@ -156,7 +170,7 @@ export const AdminLayout: React.FC = () => {
                     Admin Control
                   </div>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-0.5" />
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 ml-0.5" aria-hidden="true" />
               </button>
 
               {/* Dropdown Menu */}
@@ -201,7 +215,7 @@ export const AdminLayout: React.FC = () => {
       <DatabaseConnectorModal isOpen={showDbModal} onClose={() => setShowDbModal(false)} />
 
       {/* Main Routed Outlet */}
-      <main className="flex-1 w-full min-h-0 overflow-y-auto">
+      <main id="main-content" role="main" tabIndex={-1} className="flex-1 w-full min-h-0 overflow-y-auto focus:outline-none">
         <Outlet />
       </main>
 
