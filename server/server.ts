@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { db } from './db/database';
+import { dbService } from './db/databaseService';
+import { askGeminiLogisticsCopilot } from './services/geminiService';
 import { NH13_PRIMARY_CORRIDOR, NH13_DYNAMIC_BYPASS, SELA_HAZARD_SECTOR } from '../src/data/mockData';
 
 const app = express();
@@ -328,6 +330,80 @@ app.get('/api/history', (_req: Request, res: Response) => {
     reroutes: db.getReroutes(),
     simulations: db.getSimulations(),
     incidents: db.getIncidents(),
+  });
+});
+
+// =============================================================================
+// ADVANCED 8 PILLARS INTELLIGENCE ENDPOINTS (SIH26002)
+// =============================================================================
+
+// 1. Northeast Logistics Command Center (Districts, Depots, Accessibility)
+app.get('/api/logistics/command-center', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    data: dbService.getCommandCenterData(),
+  });
+});
+
+// 2. Predictive Stockout Radar (Medicine & Food Supply Stock Days)
+app.get('/api/stockout-radar', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    data: dbService.getStockoutRadar(),
+  });
+});
+
+// 3. Disaster Disruption Simulator & 6. Ripple Effect Intelligence
+app.post('/api/simulator/disrupt', (req: Request, res: Response) => {
+  const result = dbService.simulateDisruption(req.body);
+  broadcastEvent({
+    type: 'DISRUPTION_TRIGGERED',
+    disruption: result,
+    message: `⚠️ Disaster Alert: ${result.hazard} at ${result.epicenter}. Ripple effects mapped.`,
+    timestamp: new Date().toISOString(),
+  });
+  res.json({ success: true, disruption: result });
+});
+
+// 4. Intelligent Supply Allocation Engine & 7. Before-and-After What-If
+app.post('/api/allocation/optimize', (req: Request, res: Response) => {
+  const { targetCenterId } = req.body;
+  const plan = dbService.runIntelligentAllocation(targetCenterId);
+  res.json({ success: true, plan });
+});
+
+app.get('/api/analytics/what-if', (_req: Request, res: Response) => {
+  const plan = dbService.runIntelligentAllocation();
+  res.json({ success: true, plan });
+});
+
+// 5. Gemini Logistics Copilot (Grounded in Live Application Data)
+app.post('/api/copilot/chat', async (req: Request, res: Response) => {
+  const { prompt } = req.body;
+  if (!prompt) {
+    return res.status(400).json({ error: 'Prompt is required.' });
+  }
+
+  const analysis = await askGeminiLogisticsCopilot(prompt);
+  res.json({ success: true, ...analysis });
+});
+
+// 8. AI Field Incident Reporter (Photos & Structured Reports)
+app.post('/api/incidents/report', (req: Request, res: Response) => {
+  const report = dbService.createFieldIncident(req.body);
+  broadcastEvent({
+    type: 'INCIDENT_REPORTED',
+    incident: report,
+    message: `📸 New Road Damage Report: ${report.hazardType} at ${report.locationName}.`,
+    timestamp: new Date().toISOString(),
+  });
+  res.status(201).json({ success: true, report });
+});
+
+app.get('/api/incidents/reports', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    reports: dbService.getFieldIncidents(),
   });
 });
 

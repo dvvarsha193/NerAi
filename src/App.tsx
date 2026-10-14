@@ -14,6 +14,7 @@ import { DispatchConsoleView } from './components/screens/DispatchConsoleView';
 import { RouteInfoView } from './components/screens/RouteInfoView';
 import { NerAiView } from './components/screens/NerAiView';
 import { FieldTerminalView } from './components/screens/FieldTerminalView';
+import { NortheastCommandCenterView } from './components/screens/NortheastCommandCenterView';
 
 // Driver Views
 import { DriverLayout } from './components/driver/DriverLayout';
@@ -80,7 +81,12 @@ export const App: React.FC = () => {
           <Route path="reroute" element={<DispatchConsoleView />} />
           <Route path="route-info" element={<RouteInfoView />} />
           <Route path="ner-ai" element={<NerAiView />} />
-          <Route path="dashboard" element={<Navigate to="/admin/vehicle-gis" replace />} />
+          <Route path="command-center" element={<NortheastCommandCenterView />} />
+          <Route path="stockout-radar" element={<NortheastCommandCenterView />} />
+          <Route path="disruption-simulator" element={<NortheastCommandCenterView />} />
+          <Route path="supply-allocation" element={<NortheastCommandCenterView />} />
+          <Route path="incident-reporter" element={<NortheastCommandCenterView />} />
+          <Route path="dashboard" element={<Navigate to="/admin/command-center" replace />} />
           <Route path="fleet" element={<Navigate to="/admin/vehicle-gis" replace />} />
           <Route path="completed" element={<Navigate to="/admin/vehicle-gis" replace />} />
           <Route path="analytics" element={<Navigate to="/admin/vehicle-gis" replace />} />

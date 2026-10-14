@@ -11,6 +11,7 @@
     "start": "concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
@@ -19,6 +20,7 @@
     "jimp": "^1.6.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.453.0",
+    "mongoose": "^9.11.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.4",

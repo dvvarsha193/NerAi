@@ -40,11 +40,12 @@ export const AdminLayout: React.FC = () => {
   };
 
   const navItems = [
+    { path: '/admin/command-center', label: 'Northeast Command Center', icon: <Compass className="w-3.5 h-3.5" /> },
     { path: '/admin/vehicle-gis', label: 'Vehicle GIS', icon: <MapPin className="w-3.5 h-3.5" /> },
-    { path: '/admin/field-reporting', label: 'Field Reporting', icon: <Radio className="w-3.5 h-3.5" />, badge: pendingReportsCount > 0 ? pendingReportsCount : undefined },
     { path: '/admin/reroute', label: 'Reroute Console', icon: <Sliders className="w-3.5 h-3.5" /> },
     { path: '/admin/route-info', label: 'Route Info', icon: <Navigation className="w-3.5 h-3.5" /> },
-    { path: '/admin/ner-ai', label: 'NER AI', icon: <Cpu className="w-3.5 h-3.5" /> },
+    { path: '/admin/ner-ai', label: 'NER AI Copilot', icon: <Cpu className="w-3.5 h-3.5" /> },
+    { path: '/admin/field-reporting', label: 'Field Reporting', icon: <Radio className="w-3.5 h-3.5" />, badge: pendingReportsCount > 0 ? pendingReportsCount : undefined },
   ];
 
   return (
