@@ -1,12 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath } from 'url';
 import { CONVOYS, NH13_PRIMARY_CORRIDOR, NH13_DYNAMIC_BYPASS, SELA_HAZARD_SECTOR, TACTICAL_ALERTS } from '../../src/data/mockData';
 import { Convoy, TacticalAlert, FieldIncidentEntry } from '../../src/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.join(__dirname, '..', 'data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join(os.tmpdir(), 'nerlogix-data')
+  : path.join(__dirname, '..', 'data');
 const DB_FILE = path.join(DATA_DIR, 'nerlogix-db.json');
 
 export interface UserRecord {

@@ -316,16 +316,21 @@ app.get('/api/stream', (req: Request, res: Response) => {
   });
 });
 
-const server = app.listen(PORT, () => {
-  console.log(`[NER-LOGIX Operations Engine] Active on http://localhost:${PORT}`);
-  console.log(`[Database] File-persisted storage loaded successfully`);
-  console.log(`[Sector] NH-13 Trans-Himalayan Highway (Guwahati ⇄ Tawang)`);
-});
+if (!process.env.VERCEL) {
+  const server = app.listen(PORT, () => {
+    console.log(`[NER-LOGIX Operations Engine] Active on http://localhost:${PORT}`);
+    console.log(`[Database] File-persisted storage loaded successfully`);
+    console.log(`[Sector] NH-13 Trans-Himalayan Highway (Guwahati ⇄ Tawang)`);
+  });
 
-server.on('error', (err: any) => {
-  if (err.code === 'EADDRINUSE') {
-    console.warn(`[NER-LOGIX Operations Engine] Port ${PORT} is already in use by another instance. Using existing running service.`);
-  } else {
-    console.error('[NER-LOGIX Operations Engine] Server error:', err);
-  }
-});
+  server.on('error', (err: any) => {
+    if (err.code === 'EADDRINUSE') {
+      console.warn(`[NER-LOGIX Operations Engine] Port ${PORT} is already in use by another instance. Using existing running service.`);
+    } else {
+      console.error('[NER-LOGIX Operations Engine] Server error:', err);
+    }
+  });
+}
+
+export { app };
+export default app;
