@@ -42,6 +42,40 @@
         "password",
         "123456"
       ]
+    },
+    {
+      "id": "USR-DRV-02",
+      "name": "Test Pilot",
+      "email": "pilot@airforce.in",
+      "operatorId": "DRV-02",
+      "role": "DRIVER",
+      "designation": "Senior Heavy Freight Pilot",
+      "assignedVehicle": "NER-TRK-01",
+      "passwords": [
+        "secret123"
+      ]
+    },
+    {
+      "id": "USR-ADM-02",
+      "name": "Google Commander",
+      "email": "commander@gmail.com",
+      "operatorId": "ADM-02",
+      "role": "ADMIN",
+      "designation": "Certified Google Operator",
+      "passwords": [
+        "google-oauth-session"
+      ]
+    },
+    {
+      "id": "USR-ADM-03",
+      "name": "Anybody",
+      "email": "anybody@domain.com",
+      "operatorId": "ADM-03",
+      "role": "ADMIN",
+      "designation": "Logistics Controller",
+      "passwords": [
+        "mypassword"
+      ]
     }
   ],
   "convoys": [
@@ -347,5 +381,5 @@
     }
   ],
   "simulations": [],
-  "lastUpdated": "2026-09-16T07:31:18.048Z"
+  "lastUpdated": "2026-10-14T08:02:35.407Z"
 }
