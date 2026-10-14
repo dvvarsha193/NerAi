@@ -266,8 +266,9 @@ class DatabaseService {
     // 2. Check Supabase
     if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
       try {
-        this.supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-        console.log('[Database] Supabase client initialized successfully');
+        const cleanUrl = process.env.SUPABASE_URL.trim().replace(/\.col$/, '.co');
+        this.supabase = createClient(cleanUrl, process.env.SUPABASE_ANON_KEY.trim());
+        console.log('[Database] Supabase client initialized successfully: ' + cleanUrl);
       } catch (err) {
         console.warn('[Database] Supabase init failed:', err);
       }
@@ -308,6 +309,23 @@ class DatabaseService {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 6000 });
       this.isMongoConnected = true;
       await this.syncMongoData();
+
+      // Persist to .env
+      try {
+        const envPath = path.join(process.cwd(), '.env');
+        if (fs.existsSync(envPath)) {
+          let envContent = fs.readFileSync(envPath, 'utf-8');
+          if (envContent.includes('MONGODB_URI=')) {
+            envContent = envContent.replace(/#?\s*MONGODB_URI=.*/g, `MONGODB_URI=${uri}`);
+          } else {
+            envContent += `\nMONGODB_URI=${uri}`;
+          }
+          fs.writeFileSync(envPath, envContent, 'utf-8');
+        }
+      } catch (e) {
+        console.warn('Could not update .env:', e);
+      }
+
       return {
         success: true,
         message: 'Successfully connected to MongoDB Atlas! 8 Northeast state models synchronized.',
@@ -325,8 +343,32 @@ class DatabaseService {
 
   public async connectExternalSupabase(url: string, key: string) {
     try {
+      url = url.trim().replace(/\.col$/, '.co');
+      key = key.trim();
       const client = createClient(url, key);
       this.supabase = client;
+
+      // Persist to .env
+      try {
+        const envPath = path.join(process.cwd(), '.env');
+        if (fs.existsSync(envPath)) {
+          let envContent = fs.readFileSync(envPath, 'utf-8');
+          if (envContent.includes('SUPABASE_URL=')) {
+            envContent = envContent.replace(/#?\s*SUPABASE_URL=.*/g, `SUPABASE_URL=${url}`);
+          } else {
+            envContent += `\nSUPABASE_URL=${url}`;
+          }
+          if (envContent.includes('SUPABASE_ANON_KEY=')) {
+            envContent = envContent.replace(/#?\s*SUPABASE_ANON_KEY=.*/g, `SUPABASE_ANON_KEY=${key}`);
+          } else {
+            envContent += `\nSUPABASE_ANON_KEY=${key}`;
+          }
+          fs.writeFileSync(envPath, envContent, 'utf-8');
+        }
+      } catch (e) {
+        console.warn('Could not update .env:', e);
+      }
+
       return {
         success: true,
         message: 'Supabase client connected and operational!',
