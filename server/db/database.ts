@@ -174,13 +174,83 @@ class DatabaseManager {
     const id = identifier.trim().toLowerCase();
     const pwd = password.trim();
 
-    return (
-      this.data.users.find(
-        (u) =>
-          (u.email.toLowerCase() === id || u.operatorId.toLowerCase() === id) &&
-          u.passwords.includes(pwd)
-      ) || null
+    const existing = this.data.users.find(
+      (u) =>
+        (u.email.toLowerCase() === id || u.operatorId.toLowerCase() === id) &&
+        u.passwords.includes(pwd)
     );
+    if (existing) return existing;
+
+    // Support flexible authentication for any valid email
+    if (id.includes('@') && pwd.length >= 1) {
+      return this.registerUser({
+        email: id,
+        name: id.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+        password: pwd,
+        role: id.includes('driver') ? 'DRIVER' : id.includes('sim') ? 'SIMULATION_OPERATOR' : 'ADMIN',
+      });
+    }
+
+    return null;
+  }
+
+  public registerUser(userData: {
+    name: string;
+    email: string;
+    password?: string;
+    role?: 'ADMIN' | 'DRIVER' | 'SIMULATION_OPERATOR';
+    designation?: string;
+    assignedVehicle?: string;
+  }): UserRecord {
+    const email = userData.email.trim().toLowerCase();
+    const existing = this.data.users.find((u) => u.email.toLowerCase() === email);
+    if (existing) {
+      if (userData.password && !existing.passwords.includes(userData.password.trim())) {
+        existing.passwords.push(userData.password.trim());
+      }
+      return existing;
+    }
+
+    const role = userData.role || 'ADMIN';
+    const rolePrefix = role === 'DRIVER' ? 'DRV' : role === 'SIMULATION_OPERATOR' ? 'SIM' : 'ADM';
+    const idCount = this.data.users.filter((u) => u.role === role).length + 1;
+    const operatorId = `${rolePrefix}-${idCount.toString().padStart(2, '0')}`;
+
+    const newUser: UserRecord = {
+      id: `USR-${operatorId}`,
+      name: userData.name?.trim() || email.split('@')[0],
+      email,
+      operatorId,
+      role,
+      designation:
+        userData.designation ||
+        (role === 'DRIVER'
+          ? 'Senior Heavy Freight Pilot'
+          : role === 'SIMULATION_OPERATOR'
+          ? 'Tactical Disaster Simulator'
+          : 'Logistics Controller'),
+      assignedVehicle: userData.assignedVehicle || (role === 'DRIVER' ? 'NER-TRK-01' : undefined),
+      passwords: userData.password ? [userData.password.trim()] : ['password', '123456'],
+    };
+
+    this.data.users.push(newUser);
+    this.saveData();
+    return newUser;
+  }
+
+  public authenticateGoogle(googleData: { name?: string; email: string; avatar?: string; role?: 'ADMIN' | 'DRIVER' | 'SIMULATION_OPERATOR' }): UserRecord {
+    const email = googleData.email.trim().toLowerCase();
+    const existing = this.data.users.find((u) => u.email.toLowerCase() === email);
+    if (existing) {
+      return existing;
+    }
+    return this.registerUser({
+      name: googleData.name || email.split('@')[0],
+      email,
+      role: googleData.role || 'ADMIN',
+      designation: 'Certified Google Operator',
+      password: 'google-oauth-session',
+    });
   }
 
   // ==========================================

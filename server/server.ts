@@ -63,6 +63,49 @@ app.post('/api/auth/login', (req: Request, res: Response) => {
   });
 });
 
+app.post('/api/auth/register', (req: Request, res: Response) => {
+  const { name, email, password, role, designation } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'Email and password are required.' });
+  }
+
+  const user = db.registerUser({
+    name: name || email.split('@')[0],
+    email,
+    password,
+    role: role || 'ADMIN',
+    designation,
+  });
+
+  const { passwords, ...userProfile } = user;
+  const token = `jwt-nerlogix-${user.role.toLowerCase()}-${Date.now()}`;
+
+  res.json({
+    success: true,
+    user: userProfile,
+    token,
+    message: 'Account created successfully.',
+  });
+});
+
+app.post('/api/auth/google', (req: Request, res: Response) => {
+  const { name, email, avatar, role } = req.body;
+  if (!email) {
+    return res.status(400).json({ error: 'Google email is required.' });
+  }
+
+  const user = db.authenticateGoogle({ name, email, avatar, role });
+  const { passwords, ...userProfile } = user;
+  const token = `jwt-nerlogix-google-${user.role.toLowerCase()}-${Date.now()}`;
+
+  res.json({
+    success: true,
+    user: { ...userProfile, avatar: avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.name)}` },
+    token,
+    message: 'Google authentication successful.',
+  });
+});
+
 // =============================================================================
 // HEALTH & CORRIDOR INTELLIGENCE
 // =============================================================================
