@@ -387,7 +387,7 @@ app.get('/api/analytics/what-if', (_req: Request, res: Response) => {
 
 // 5. Gemini Logistics Copilot (Grounded in Live Application Data)
 app.post('/api/copilot/chat', async (req: Request, res: Response) => {
-  const { prompt } = req.body;
+  const prompt = req.body.prompt || req.body.message || req.body.query;
   if (!prompt) {
     return res.status(400).json({ error: 'Prompt is required.' });
   }
