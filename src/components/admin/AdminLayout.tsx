@@ -13,13 +13,15 @@ import {
   User,
   Compass,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Database
 } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useTelemetryStore } from '../../store/useTelemetryStore';
 import { useOfflineStore } from '../../store/useOfflineStore';
 import { Toast } from '../layout/Toast';
 import { AiScoreAuditModal } from '../modals/AiScoreAuditModal';
+import { DatabaseConnectorModal } from '../modals/DatabaseConnectorModal';
 
 export const AdminLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ export const AdminLayout: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showAiScoreModal, setShowAiScoreModal] = useState(false);
+  const [showDbModal, setShowDbModal] = useState(false);
 
   const unreadAlerts = alerts.filter((a) => !a.acknowledged).length;
   const pendingReportsCount = pendingReports.length;
@@ -124,6 +127,17 @@ export const AdminLayout: React.FC = () => {
               )}
             </button>
 
+            {/* Database Hub Pill */}
+            <button
+              onClick={() => setShowDbModal(true)}
+              title="Click to view Database Connectivity (MongoDB Atlas / Supabase)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 hover:from-emerald-100 hover:to-teal-100 text-xs font-bold shadow-xs hover:shadow-sm transition-all cursor-pointer active:scale-95"
+            >
+              <Database className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="text-[11px] font-black">Database Hub</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse ml-0.5" />
+            </button>
+
             {/* AI Score Audit Pill */}
             <button
               onClick={() => setShowAiScoreModal(true)}
@@ -198,6 +212,9 @@ export const AdminLayout: React.FC = () => {
 
       {/* AI Intelligence Audit & SIH Evaluation Score Modal */}
       <AiScoreAuditModal isOpen={showAiScoreModal} onClose={() => setShowAiScoreModal(false)} />
+
+      {/* Database Connectivity & Cloud Persistence Modal */}
+      <DatabaseConnectorModal isOpen={showDbModal} onClose={() => setShowDbModal(false)} />
 
       {/* Main Routed Outlet */}
       <main className="flex-1 w-full min-h-0 overflow-y-auto">

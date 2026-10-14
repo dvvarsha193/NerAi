@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { db } from './db/database';
@@ -413,6 +414,32 @@ app.get('/api/incidents/reports', (_req: Request, res: Response) => {
     success: true,
     reports: dbService.getFieldIncidents(),
   });
+});
+
+// Database Diagnostics & Live Connection Endpoints
+app.get('/api/database/status', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    ...dbService.getDatabaseStatus(),
+  });
+});
+
+app.post('/api/database/connect-mongo', async (req: Request, res: Response) => {
+  const { uri } = req.body;
+  if (!uri) {
+    return res.status(400).json({ success: false, error: 'MongoDB connection string (URI) is required.' });
+  }
+  const result = await dbService.connectExternalMongo(uri);
+  res.json(result);
+});
+
+app.post('/api/database/connect-supabase', async (req: Request, res: Response) => {
+  const { url, key } = req.body;
+  if (!url || !key) {
+    return res.status(400).json({ success: false, error: 'Both Supabase URL and Anon Key are required.' });
+  }
+  const result = await dbService.connectExternalSupabase(url, key);
+  res.json(result);
 });
 
 // =============================================================================

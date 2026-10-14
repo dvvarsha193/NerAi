@@ -15,6 +15,7 @@
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^18.0.7",
     "express": "^4.21.0",
     "framer-motion": "^11.11.9",
     "jimp": "^1.6.1",

@@ -1,9 +1,11 @@
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import { fileURLToPath } from 'url';
+import { DepotModel, HealthCenterModel, RoadConditionModel, FieldIncidentModel } from './models';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -250,9 +252,12 @@ class DatabaseService {
     // 1. Check MongoDB Atlas
     if (process.env.MONGODB_URI) {
       try {
-        await mongoose.connect(process.env.MONGODB_URI);
+        await mongoose.connect(process.env.MONGODB_URI, {
+          serverSelectionTimeoutMS: 5000,
+        });
         this.isMongoConnected = true;
         console.log('[Database] Successfully connected to MongoDB Atlas');
+        await this.syncMongoData();
       } catch (err) {
         console.warn('[Database] MongoDB connection failed, utilizing persistent local database:', err);
       }
@@ -262,7 +267,7 @@ class DatabaseService {
     if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
       try {
         this.supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-        console.log('[Database] Supabase client initialized');
+        console.log('[Database] Supabase client initialized successfully');
       } catch (err) {
         console.warn('[Database] Supabase init failed:', err);
       }
@@ -270,6 +275,96 @@ class DatabaseService {
 
     // 3. Load or seed persistent local JSON storage
     this.loadLocalData();
+  }
+
+  public async syncMongoData() {
+    if (!this.isMongoConnected) return;
+    try {
+      const depotCount = await DepotModel.countDocuments();
+      if (depotCount === 0) {
+        await DepotModel.insertMany(NER_DEPOTS as any);
+        await HealthCenterModel.insertMany(NER_HEALTH_CENTERS as any);
+        await RoadConditionModel.insertMany(NER_ROAD_CONDITIONS as any);
+        console.log('[Database] Seeded 8 Northeast states data into MongoDB Atlas');
+      } else {
+        const depots = await DepotModel.find().lean();
+        const centers = await HealthCenterModel.find().lean();
+        const roads = await RoadConditionModel.find().lean();
+        if (depots.length > 0) this.memoryData.depots = depots;
+        if (centers.length > 0) this.memoryData.healthCenters = centers;
+        if (roads.length > 0) this.memoryData.roadConditions = roads;
+        console.log(`[Database] Loaded ${depots.length} depots & ${centers.length} health centers from MongoDB Atlas`);
+      }
+    } catch (e) {
+      console.warn('[Database] Error synchronizing MongoDB Atlas data:', e);
+    }
+  }
+
+  public async connectExternalMongo(uri: string) {
+    try {
+      if (mongoose.connection.readyState !== 0) {
+        await mongoose.disconnect();
+      }
+      await mongoose.connect(uri, { serverSelectionTimeoutMS: 6000 });
+      this.isMongoConnected = true;
+      await this.syncMongoData();
+      return {
+        success: true,
+        message: 'Successfully connected to MongoDB Atlas! 8 Northeast state models synchronized.',
+        host: mongoose.connection.host,
+        databaseName: mongoose.connection.name,
+      };
+    } catch (err: any) {
+      this.isMongoConnected = false;
+      return {
+        success: false,
+        error: err.message || 'Failed to connect to MongoDB Atlas. Check your connection string and IP access list.',
+      };
+    }
+  }
+
+  public async connectExternalSupabase(url: string, key: string) {
+    try {
+      const client = createClient(url, key);
+      this.supabase = client;
+      return {
+        success: true,
+        message: 'Supabase client connected and operational!',
+      };
+    } catch (err: any) {
+      return {
+        success: false,
+        error: err.message || 'Failed to initialize Supabase client.',
+      };
+    }
+  }
+
+  public getDatabaseStatus() {
+    return {
+      provider: this.isMongoConnected
+        ? 'MongoDB Atlas (Mongoose)'
+        : this.supabase
+        ? 'Supabase Cloud (PostgreSQL)'
+        : 'Embedded JSON Datastore (Persistent)',
+      isMongoConnected: this.isMongoConnected,
+      isSupabaseConfigured: !!this.supabase,
+      isLocalPersistent: true,
+      mongoHost: this.isMongoConnected ? mongoose.connection?.host : null,
+      mongoDatabase: this.isMongoConnected ? mongoose.connection?.name : null,
+      dataCounts: {
+        depots: this.memoryData.depots?.length || 0,
+        healthCenters: this.memoryData.healthCenters?.length || 0,
+        roadConditions: this.memoryData.roadConditions?.length || 0,
+        fieldIncidents: this.memoryData.fieldIncidents?.length || 0,
+      },
+      environment: {
+        hasMongoUri: !!process.env.MONGODB_URI,
+        hasSupabaseUrl: !!process.env.SUPABASE_URL,
+        hasSupabaseAnonKey: !!process.env.SUPABASE_ANON_KEY,
+        hasGeminiKey: !!process.env.GEMINI_API_KEY,
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 
   private ensureDataDir() {
@@ -553,6 +648,14 @@ class DatabaseService {
     }
 
     this.saveLocalData();
+
+    // Persist to MongoDB Atlas if connected
+    if (this.isMongoConnected) {
+      FieldIncidentModel.create(newIncident).catch((err) => {
+        console.warn('[Database] Failed to write incident to MongoDB Atlas:', err);
+      });
+    }
+
     return newIncident;
   }
 

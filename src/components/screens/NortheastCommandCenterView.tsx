@@ -26,9 +26,11 @@ import {
   Package,
   Calendar,
   ChevronRight,
-  FileText
+  FileText,
+  Database
 } from 'lucide-react';
 import { useTelemetryStore } from '../../store/useTelemetryStore';
+import { DatabaseConnectorModal } from '../modals/DatabaseConnectorModal';
 
 const getApiBaseUrl = (endpoint: string) => {
   return typeof window !== 'undefined' && window.location.port === '5173'
@@ -87,6 +89,9 @@ export const NortheastCommandCenterView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     'command_center' | 'stockout_radar' | 'disruption_simulator' | 'allocation_engine' | 'copilot' | 'incident_reporter'
   >('command_center');
+
+  // Database Connector Modal state
+  const [showDbModal, setShowDbModal] = useState(false);
 
   // Pillar 1 Data: Command Center
   const [commandData, setCommandData] = useState<any>(null);
@@ -412,17 +417,28 @@ export const NortheastCommandCenterView: React.FC = () => {
           </button>
         </div>
 
-        <button
-          onClick={() => {
-            fetchCommandCenterData();
-            fetchStockoutRadar();
-            fetchWhatIfData();
-          }}
-          className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors cursor-pointer"
-          title="Refresh All Database Streams"
-        >
-          <RefreshCw className="w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowDbModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-bold transition-all shadow-xs cursor-pointer"
+            title="Database Connectivity & Setup (Mongoose / Supabase)"
+          >
+            <Database className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="hidden sm:inline">Database Hub</span>
+          </button>
+
+          <button
+            onClick={() => {
+              fetchCommandCenterData();
+              fetchStockoutRadar();
+              fetchWhatIfData();
+            }}
+            className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 transition-colors cursor-pointer"
+            title="Refresh All Database Streams"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
       </div>
 
       {/* Main Tab Views */}
@@ -1292,6 +1308,16 @@ export const NortheastCommandCenterView: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Database Connectivity & Cloud Persistence Modal */}
+      <DatabaseConnectorModal
+        isOpen={showDbModal}
+        onClose={() => setShowDbModal(false)}
+        onRefresh={() => {
+          fetchCommandCenterData();
+          fetchStockoutRadar();
+        }}
+      />
     </div>
   );
 };
