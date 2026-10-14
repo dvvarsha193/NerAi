@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import { db } from './db/database';
 import { dbService } from './db/databaseService';
@@ -10,6 +11,9 @@ import { NH13_PRIMARY_CORRIDOR, NH13_DYNAMIC_BYPASS, SELA_HAZARD_SECTOR } from '
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// High-Efficiency Gzip/Brotli Compression
+app.use(compression());
 
 // 1. Enterprise Security Headers via Helmet
 app.use(

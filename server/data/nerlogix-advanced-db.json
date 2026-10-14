@@ -442,11 +442,11 @@
         25.3341,
         91.7589
       ],
-      "accessibilityStatus": "CAUTION",
-      "hazardType": "FLOOD",
-      "severity": "MEDIUM",
+      "accessibilityStatus": "BLOCKED",
+      "hazardType": "ROCKFALL",
+      "severity": "CRITICAL",
       "estimatedClearanceHours": 5.5,
-      "lastUpdated": "1 hour ago",
+      "lastUpdated": "Just now (Field Drone Verified)",
       "reportedBy": "Meghalaya Disaster Control",
       "affectedHealthCenters": [
         "HC-MAW-05"
@@ -455,6 +455,120 @@
     }
   ],
   "fieldIncidents": [
+    {
+      "incidentId": "INC-FLD-0995",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Dirang Chu River Basin KM 298",
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood Debris",
+      "damageSeverity": "SEVERE",
+      "affectedCorridor": "NH-13 West Kameng Arterial",
+      "notes": "Road embankment eroded by torrential floodwaters.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Inspector Tenzing (BRO)",
+      "timestamp": "02:41 PM"
+    },
+    {
+      "incidentId": "INC-FLD-0084",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Dirang Chu River Basin KM 298",
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood Debris",
+      "damageSeverity": "SEVERE",
+      "affectedCorridor": "NH-13 West Kameng Arterial",
+      "notes": "Road embankment eroded by torrential floodwaters.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Inspector Tenzing (BRO)",
+      "timestamp": "02:41 PM"
+    },
+    {
+      "incidentId": "INC-FLD-1321",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Dirang Chu River Basin KM 298",
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood Debris",
+      "damageSeverity": "SEVERE",
+      "affectedCorridor": "NH-13 West Kameng Arterial",
+      "notes": "Road embankment eroded by torrential floodwaters.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Inspector Tenzing (BRO)",
+      "timestamp": "02:40 PM"
+    },
+    {
+      "incidentId": "INC-FLD-6298",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Mawkdok Gorge Valley Sector KM 84.1",
+      "district": "East Khasi Hills",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood and Bridge Scour",
+      "damageSeverity": "IMPASSABLE",
+      "affectedCorridor": "NH-6",
+      "notes": "Road submerged by 1.8m surging water. BRO bulldozers standing by.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Patrol Drone Alpha-4",
+      "timestamp": "02:39 PM"
+    },
+    {
+      "incidentId": "INC-FLD-6249",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Dirang Chu River Basin KM 298",
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood Debris",
+      "damageSeverity": "SEVERE",
+      "affectedCorridor": "NH-13 West Kameng Arterial",
+      "notes": "Road embankment eroded by torrential floodwaters.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Inspector Tenzing (BRO)",
+      "timestamp": "02:39 PM"
+    },
+    {
+      "incidentId": "INC-FLD-8201",
+      "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
+      "locationName": "Dirang Chu River Basin KM 298",
+      "district": "West Kameng",
+      "state": "Arunachal Pradesh",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "hazardType": "Flash Flood Debris",
+      "damageSeverity": "SEVERE",
+      "affectedCorridor": "NH-13 West Kameng Arterial",
+      "notes": "Road embankment eroded by torrential floodwaters.",
+      "humanVerified": false,
+      "verifiedBy": null,
+      "reporterName": "Inspector Tenzing (BRO)",
+      "timestamp": "02:36 PM"
+    },
     {
       "incidentId": "INC-FLD-1692",
       "photoUrl": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
@@ -551,6 +665,191 @@
     }
   ],
   "disasterSimulations": [
+    {
+      "simulationId": "SIM-DIS-0990",
+      "hazard": "LANDSLIDE",
+      "epicenter": "Sela Pass Ascent Sector KM 414.2",
+      "district": "Tawang",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "timestamp": "2026-10-14T09:11:30.990Z",
+      "affectedCorridorsCount": 2,
+      "primaryBlockedRoute": "NH-13 Sector (Sela Pass Ascent Sector KM 414.2)",
+      "recommendedBypassRoute": "NH-13B Mandala-Shergaon All-Weather Elevated Bypass",
+      "directlyIsolatedHealthCenters": [
+        {
+          "id": "HC-TAW-01",
+          "name": "Tawang Apex District Civil Hospital",
+          "district": "Tawang",
+          "populationAtRisk": 49977,
+          "criticalSuppliesImpendingShortage": "Cryogenic Liquid Oxygen & Pediatric Vaccines"
+        },
+        {
+          "id": "HC-DIR-02",
+          "name": "Dirang Primary Mountain Health Clinic",
+          "district": "West Kameng",
+          "populationAtRisk": 18450,
+          "criticalSuppliesImpendingShortage": "Anti-Venom & Trauma Infusion Fluids"
+        }
+      ],
+      "rippleImpactSummary": {
+        "totalPopulationAffected": 68427,
+        "delayedShipmentsCount": 3,
+        "estimatedDelayWithoutReplanningHours": 16.4,
+        "estimatedDelayWithAiBypassHours": 3.2,
+        "timeSavedHours": 13.2
+      }
+    },
+    {
+      "simulationId": "SIM-DIS-0080",
+      "hazard": "LANDSLIDE",
+      "epicenter": "Sela Pass Ascent Sector KM 414.2",
+      "district": "Tawang",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "timestamp": "2026-10-14T09:11:00.080Z",
+      "affectedCorridorsCount": 2,
+      "primaryBlockedRoute": "NH-13 Sector (Sela Pass Ascent Sector KM 414.2)",
+      "recommendedBypassRoute": "NH-13B Mandala-Shergaon All-Weather Elevated Bypass",
+      "directlyIsolatedHealthCenters": [
+        {
+          "id": "HC-TAW-01",
+          "name": "Tawang Apex District Civil Hospital",
+          "district": "Tawang",
+          "populationAtRisk": 49977,
+          "criticalSuppliesImpendingShortage": "Cryogenic Liquid Oxygen & Pediatric Vaccines"
+        },
+        {
+          "id": "HC-DIR-02",
+          "name": "Dirang Primary Mountain Health Clinic",
+          "district": "West Kameng",
+          "populationAtRisk": 18450,
+          "criticalSuppliesImpendingShortage": "Anti-Venom & Trauma Infusion Fluids"
+        }
+      ],
+      "rippleImpactSummary": {
+        "totalPopulationAffected": 68427,
+        "delayedShipmentsCount": 3,
+        "estimatedDelayWithoutReplanningHours": 16.4,
+        "estimatedDelayWithAiBypassHours": 3.2,
+        "timeSavedHours": 13.2
+      }
+    },
+    {
+      "simulationId": "SIM-DIS-1317",
+      "hazard": "LANDSLIDE",
+      "epicenter": "Sela Pass Ascent Sector KM 414.2",
+      "district": "Tawang",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "timestamp": "2026-10-14T09:10:11.317Z",
+      "affectedCorridorsCount": 2,
+      "primaryBlockedRoute": "NH-13 Sector (Sela Pass Ascent Sector KM 414.2)",
+      "recommendedBypassRoute": "NH-13B Mandala-Shergaon All-Weather Elevated Bypass",
+      "directlyIsolatedHealthCenters": [
+        {
+          "id": "HC-TAW-01",
+          "name": "Tawang Apex District Civil Hospital",
+          "district": "Tawang",
+          "populationAtRisk": 49977,
+          "criticalSuppliesImpendingShortage": "Cryogenic Liquid Oxygen & Pediatric Vaccines"
+        },
+        {
+          "id": "HC-DIR-02",
+          "name": "Dirang Primary Mountain Health Clinic",
+          "district": "West Kameng",
+          "populationAtRisk": 18450,
+          "criticalSuppliesImpendingShortage": "Anti-Venom & Trauma Infusion Fluids"
+        }
+      ],
+      "rippleImpactSummary": {
+        "totalPopulationAffected": 68427,
+        "delayedShipmentsCount": 3,
+        "estimatedDelayWithoutReplanningHours": 16.4,
+        "estimatedDelayWithAiBypassHours": 3.2,
+        "timeSavedHours": 13.2
+      }
+    },
+    {
+      "simulationId": "SIM-DIS-6246",
+      "hazard": "LANDSLIDE",
+      "epicenter": "Sela Pass Ascent Sector KM 414.2",
+      "district": "Tawang",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "timestamp": "2026-10-14T09:09:06.246Z",
+      "affectedCorridorsCount": 2,
+      "primaryBlockedRoute": "NH-13 Sector (Sela Pass Ascent Sector KM 414.2)",
+      "recommendedBypassRoute": "NH-13B Mandala-Shergaon All-Weather Elevated Bypass",
+      "directlyIsolatedHealthCenters": [
+        {
+          "id": "HC-TAW-01",
+          "name": "Tawang Apex District Civil Hospital",
+          "district": "Tawang",
+          "populationAtRisk": 49977,
+          "criticalSuppliesImpendingShortage": "Cryogenic Liquid Oxygen & Pediatric Vaccines"
+        },
+        {
+          "id": "HC-DIR-02",
+          "name": "Dirang Primary Mountain Health Clinic",
+          "district": "West Kameng",
+          "populationAtRisk": 18450,
+          "criticalSuppliesImpendingShortage": "Anti-Venom & Trauma Infusion Fluids"
+        }
+      ],
+      "rippleImpactSummary": {
+        "totalPopulationAffected": 68427,
+        "delayedShipmentsCount": 3,
+        "estimatedDelayWithoutReplanningHours": 16.4,
+        "estimatedDelayWithAiBypassHours": 3.2,
+        "timeSavedHours": 13.2
+      }
+    },
+    {
+      "simulationId": "SIM-DIS-8192",
+      "hazard": "LANDSLIDE",
+      "epicenter": "Sela Pass Ascent Sector KM 414.2",
+      "district": "Tawang",
+      "coordinates": [
+        27.505,
+        92.105
+      ],
+      "timestamp": "2026-10-14T09:06:08.192Z",
+      "affectedCorridorsCount": 2,
+      "primaryBlockedRoute": "NH-13 Sector (Sela Pass Ascent Sector KM 414.2)",
+      "recommendedBypassRoute": "NH-13B Mandala-Shergaon All-Weather Elevated Bypass",
+      "directlyIsolatedHealthCenters": [
+        {
+          "id": "HC-TAW-01",
+          "name": "Tawang Apex District Civil Hospital",
+          "district": "Tawang",
+          "populationAtRisk": 49977,
+          "criticalSuppliesImpendingShortage": "Cryogenic Liquid Oxygen & Pediatric Vaccines"
+        },
+        {
+          "id": "HC-DIR-02",
+          "name": "Dirang Primary Mountain Health Clinic",
+          "district": "West Kameng",
+          "populationAtRisk": 18450,
+          "criticalSuppliesImpendingShortage": "Anti-Venom & Trauma Infusion Fluids"
+        }
+      ],
+      "rippleImpactSummary": {
+        "totalPopulationAffected": 68427,
+        "delayedShipmentsCount": 3,
+        "estimatedDelayWithoutReplanningHours": 16.4,
+        "estimatedDelayWithAiBypassHours": 3.2,
+        "timeSavedHours": 13.2
+      }
+    },
     {
       "simulationId": "SIM-DIS-1690",
       "hazard": "LANDSLIDE",
@@ -701,5 +1000,5 @@
     }
   ],
   "allocationHistory": [],
-  "lastUpdated": "2026-10-14T09:04:01.716Z"
+  "lastUpdated": "2026-10-14T09:11:31.030Z"
 }

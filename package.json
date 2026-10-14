@@ -17,6 +17,7 @@
     "@supabase/supabase-js": "^2.117.3",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
+    "compression": "^1.8.2",
     "cors": "^2.8.5",
     "dotenv": "^18.0.7",
     "express": "^4.21.0",
